@@ -1,0 +1,42 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	  <display-name>ECommerce WebApp</display-name>
+	  <servlet>
+	  	<servlet-name>OrderProcesser</servlet-name>
+	  	<display-name>OrderProcesser</display-name>
+	  	<description></description>
+	  	<servlet-class>com.dbmsproject.EcommerceWebApp.OrderProcesser</servlet-class>
+	  </servlet>
+	  <servlet-mapping>
+	  	<servlet-name>OrderProcesser</servlet-name>
+	  	<url-pattern>/OrderProcesser</url-pattern>
+	  </servlet-mapping>
+	    <!--
+		  <servlet>
+		  	<servlet-name>DA_Processer</servlet-name>
+		  	<display-name>DA_Processer</display-name>
+		  	<description></description>
+		  	<servlet-class>com.dbmsproject.EcommerceWebApp.DA_Processer</servlet-class>
+		  </servlet>
+		  <servlet-mapping>
+		  	<servlet-name>DA_Processer</servlet-name>
+		  	<url-pattern>/DA_Processer</url-pattern>
+		  </servlet-mapping>
+	 
+		  <servlet>
+		  	<servlet-name>ATC_BN_Processer</servlet-name>
+		  	<display-name>ATC_BN_Processer</display-name>
+		  	<description></description>
+		  	<servlet-class>com.dbmsproject.EcommerceWebApp.ATC_BN_Processer</servlet-class>
+		  </servlet>
+		  <servlet-mapping>
+		  	<servlet-name>ATC_BN_Processer</servlet-name>
+		  	<url-pattern>/ATC_BN_Processer</url-pattern>
+		  </servlet-mapping>
+	 -->
+</web-app>
+
+
