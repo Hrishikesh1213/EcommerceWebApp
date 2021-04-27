@@ -10,6 +10,12 @@
 	  	<description></description>
 	  	<servlet-class>com.dbmsproject.EcommerceWebApp.OrderProcesser</servlet-class>
 	  </servlet>
+	  <servlet>
+	  	<servlet-name>SellerProcesser</servlet-name>
+	  	<display-name>SellerProcesser</display-name>
+	  	<description></description>
+	  	<servlet-class>com.dbmsproject.EcommerceWebApp.SellerProcesser</servlet-class>
+	  </servlet>
 	  <servlet-mapping>
 	  	<servlet-name>OrderProcesser</servlet-name>
 	  	<url-pattern>/OrderProcesser</url-pattern>

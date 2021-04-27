@@ -1,28 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ page import="com.dbmsproject.EcommerceWebApp.CartRepo" %>
-<%@ page import="com.dbmsproject.EcommerceWebApp.MyCart" %>
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="java.lang.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-</style>
-<title>My Cart</title>
+<title>Insert title here</title>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -89,61 +70,19 @@ td, th {
 	}
 %>
 
-<table>
-  <tr>
-    <th>Image</th>
-    <th>Product Name</th>
-    <th>Seller Name</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Cost</th>
-  </tr>
-<% 
-		CartRepo cr = new CartRepo();
-		
-		int cID = Integer.parseInt(session.getAttribute("cID").toString());
+<form action = "LoginRegister" method = "post">
 
-		ArrayList<MyCart> list = cr.getMyCart(cID);
-		
-		if(list.size() == 0){
-%>
-			<h1>Cart is Empty</h1><br>
-			<h2>Proceed to shopping area</h2>
-<%
-		}
-		else{
-		
-		for(MyCart mc : list){
+    <label for="sellername"><b>Seller name: </b></label>
+    <input type="sellername" placeholder="Enter Name" name="sellername" required><br>
 
-%>
-		<tr>
-		    <td><img src= <%= mc.getImage() %> width="100" height="150"></td>
-		    <td><%= mc.getPname() %></td>
-		    <td><%= mc.getSname() %></td>
-		    <td><%= mc.getPrice() %></td>
-		    <td><%= mc.getQuantity() %></td>
-		    <td><%= mc.getCost() %></td>
-		    <td>
-		    	<form action="ATC_BN_Processer" method="post">
-			    	<input type="hidden" id="cID" name="cID" value = <%= cID %>>
-			    	<input type="hidden" id="pID" name="pID" value = <%= mc.getpID() %>>
-			    	<input type="hidden" id="sID" name="sID" value = <%= mc.getsID() %>>
-			    	
-				  	<button type="submit" name="submit" value="delete_from_cart" >Delete</button><br>
-			  	</form>
-		    </td>
-		</tr>
-<%
-		}
-%>
-</table>
+    <label for="sellerpassword"><b>Password</b></label>
+    <input type="sellerpassword" placeholder="Enter Password" name="sellerpassword" required><br>
+        
+    <button type="submit" name="submit" value="sellerlogin" >Login as Seller</button><br>
 
-
-<form action="ATC_BN_Processer" method="post">
-			  <button type="submit" name="submit" value="buy_now_from_cart" >Buy Now</button><br>
+    <span class="psw">Forgot <a href="#">password?</a></span>
 </form>
-<%
-		}
-%>
+
+
 </body>
 </html>

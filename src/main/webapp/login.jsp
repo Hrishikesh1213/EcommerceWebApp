@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="css\nav.css"/>
+    
 </head>
 <body>
 
@@ -53,6 +55,8 @@
     <button type="button" class="cancelbtn">Cancel</button>
     <span class="psw">Forgot <a href="#">password?</a></span>
 </form>
+<br>	<br>
+<a href="sellerlogin.jsp">Seller login</a>
 
 </body>
 </html>

@@ -139,7 +139,9 @@
 				<img src= <%= p.getImage() %>
 				style="width:100%"/>
 				<strong><%= p.getPname() %></strong>
-				<p class="productDetails"><%= p.getDescription() %></p>
+			<!-- 	
+			<p class="productDetails"><%= p.getDescription() %></p>
+			-->
 				<p><%= p.getPrice() %></p>
 			</div>
 			<form action="ATC_BN_Processer" method="post">
