@@ -18,9 +18,10 @@ public class ConfirmRepo {
 		}
 	}
 	
-	public int callCheckout(int cID, String phno, String addr, String payment_methode) {
+	public String callCheckout(int cID, String phno, String addr, String payment_methode) {
 		
 		String runSP = "{ call checkout(?,?,?,?) }";
+        String ret = null;
 
         CallableStatement cs;
 		try {
@@ -36,15 +37,20 @@ public class ConfirmRepo {
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("->>>>>>>>>>>>>>>>>>"+e.getErrorCode());
+			String err_msg = e.getMessage().split("~")[1];
+			
+			System.out.println("->>>>>>>>>>>>>>>>>"+err_msg);
+			ret = err_msg;
+
 
 		}
-		return 0;
+		return ret;
 	}
 	
-	public int callBuyThis(int cID, int pID, int sID, int quantity, String phno, String addr, String payment_methode) {
+	public String callBuyThis(int cID, int pID, int sID, int quantity, String phno, String addr, String payment_methode) {
 		
-        String runSP = "{ call buy_this(?,?,?,?,?,?,?) }";
+        String runSP = "{ call buy_this(?,?,?,?,?,?,?) }";        
+        String ret = null;
 
         CallableStatement cs;
 		try {
@@ -63,8 +69,13 @@ public class ConfirmRepo {
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
+
+			String err_msg = e.getMessage().split("~")[1];
+			
+			System.out.println("->>>>>>>>>>>>>>>>>"+err_msg);
+			ret = err_msg;
 		}
-		return 0;
+		return ret;
 	}
 
 }

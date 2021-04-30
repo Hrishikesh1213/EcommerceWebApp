@@ -1,9 +1,13 @@
 package com.dbmsproject.EcommerceWebApp;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class ProductRepo {
 	
@@ -36,7 +40,24 @@ public class ProductRepo {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				list.add(new Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8),rs.getInt(9)));
+				
+				Blob blob = rs.getBlob(7);
+	            InputStream inputStream = blob.getBinaryStream();
+	            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	            byte[] buffer = new byte[4096];
+	            int bytesRead = -1;
+	             
+	            while ((bytesRead = inputStream.read(buffer)) != -1) {
+	                outputStream.write(buffer, 0, bytesRead);                  
+	            }
+	             
+	            byte[] imageBytes = outputStream.toByteArray();
+	            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+	             
+	             
+	            inputStream.close();
+	            outputStream.close();
+				list.add(new Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), base64Image, rs.getString(8),rs.getInt(9)));
 			}
 		}
 		catch(Exception e){
@@ -61,7 +82,23 @@ public class ProductRepo {
 			ps.setInt(1, pID);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				list.add(new Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8),rs.getInt(9)));
+				Blob blob = rs.getBlob(7);
+	            InputStream inputStream = blob.getBinaryStream();
+	            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	            byte[] buffer = new byte[4096];
+	            int bytesRead = -1;
+	             
+	            while ((bytesRead = inputStream.read(buffer)) != -1) {
+	                outputStream.write(buffer, 0, bytesRead);                  
+	            }
+	             
+	            byte[] imageBytes = outputStream.toByteArray();
+	            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+	             
+	             
+	            inputStream.close();
+	            outputStream.close();
+				list.add(new Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), base64Image, rs.getString(8),rs.getInt(9)));
 			}
 		}
 		catch(Exception e){

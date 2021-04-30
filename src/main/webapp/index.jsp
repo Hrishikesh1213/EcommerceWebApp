@@ -46,7 +46,7 @@
 	  border: 1px solid #ccc;
 	  float: left;
 	  width: 180px;
-	  hight: 300px;
+	  height: 450px;
 	  padding: 20px;
 	}
 	
@@ -111,7 +111,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="#">Solutions</a></li>
+            <li><a href="wallet.jsp">wallet</a></li>
             <li><a href="prev_orders.jsp">Previous Orders</a></li>
             <li><a href="mycart.jsp">My Cart</a></li>
             <li><a href="contactus.jsp">Contact Us</a></li>
@@ -124,7 +124,17 @@
 
         </ul>
     </nav><br><br><br><br><br>
-			welcome <%= (String)session.getAttribute("email") %> <br>
+    welcome <%= (String)session.getAttribute("email") %> <br>
+    
+<%
+		String err_msg = session.getAttribute("error_to_home_page").toString();
+		
+		if(!err_msg.equals("")){
+%>
+				<h1><%= err_msg %></h1>	
+<%
+		}
+%>
 <%
 	}
 
@@ -136,13 +146,13 @@
 %>
 		<div class="gallery">
 			<div class="productCard">
-				<img src= <%= p.getImage() %>
+				<img src="data:image/jpg;base64,<%= p.getImage() %>"
 				style="width:100%"/>
 				<strong><%= p.getPname() %></strong>
 			<!-- 	
 			<p class="productDetails"><%= p.getDescription() %></p>
 			-->
-				<p><%= p.getPrice() %></p>
+		<p><b>Rs.</b><%= p.getPrice() %></p>
 			</div>
 			<form action="ATC_BN_Processer" method="post">
 			  <label for="quantity">Quantity: </label>

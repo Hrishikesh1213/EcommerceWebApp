@@ -1,10 +1,14 @@
 package com.dbmsproject.EcommerceWebApp;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime;   
 
@@ -71,6 +75,7 @@ public class CartRepo {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			status = -1;
 		}
 		
 		return status;
@@ -107,7 +112,23 @@ public class CartRepo {
 			ps.setInt(1, cID);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				list.add(new MyCart(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8)));
+				Blob blob = rs.getBlob(3);
+	            InputStream inputStream = blob.getBinaryStream();
+	            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	            byte[] buffer = new byte[4096];
+	            int bytesRead = -1;
+	             
+	            while ((bytesRead = inputStream.read(buffer)) != -1) {
+	                outputStream.write(buffer, 0, bytesRead);                  
+	            }
+	             
+	            byte[] imageBytes = outputStream.toByteArray();
+	            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+	             
+	             
+	            inputStream.close();
+	            outputStream.close();
+				list.add(new MyCart(rs.getInt(1), rs.getInt(2), base64Image, rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8)));
 			}
 		}
 		catch(Exception e){
@@ -129,7 +150,23 @@ public class CartRepo {
 			
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				mc = new MyCart(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), 0, 0);
+				Blob blob = rs.getBlob(3);
+	            InputStream inputStream = blob.getBinaryStream();
+	            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	            byte[] buffer = new byte[4096];
+	            int bytesRead = -1;
+	             
+	            while ((bytesRead = inputStream.read(buffer)) != -1) {
+	                outputStream.write(buffer, 0, bytesRead);                  
+	            }
+	             
+	            byte[] imageBytes = outputStream.toByteArray();
+	            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+	             
+	             
+	            inputStream.close();
+	            outputStream.close();
+				mc = new MyCart(rs.getInt(1), rs.getInt(2), base64Image, rs.getString(4), rs.getString(5), rs.getInt(6), 0, 0);
 			}
 		}
 		catch(Exception e){
@@ -156,6 +193,25 @@ public class CartRepo {
 						new OrderStatus(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),
 										rs.getString(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getInt(11),0)
 						);
+			}
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+		return list;
+	}
+	
+	public ArrayList<OrderStatus> getMyTransaction(int cID){
+
+		ArrayList<OrderStatus> list = new ArrayList<OrderStatus>();
+		
+		try{
+			PreparedStatement ps = con.prepareStatement("Select tID, transdate, amount from transactions where cID = ? and transtype = 'Wallet'");
+			ps.setInt(1, cID);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				list.add( new OrderStatus( "", "", "", rs.getString(2), rs.getInt(1), "", "", "", "", rs.getInt(3), 0, 0)	);
 			}
 		}
 		catch(Exception e){

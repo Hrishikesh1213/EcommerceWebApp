@@ -46,6 +46,8 @@ public class LoginRegister extends HttpServlet {
 					session.setAttribute("name", c.getcFirst_name());
 					session.setAttribute("password", c.getcPassword());
 					
+					session.setAttribute("error_to_home_page", "");
+					
 					//response.sendRedirect("appointment.jsp");
 					request.getRequestDispatcher("index.jsp").forward(request, response);
 				}

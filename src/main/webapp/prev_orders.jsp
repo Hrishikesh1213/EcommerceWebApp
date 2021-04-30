@@ -55,7 +55,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="#">Solutions</a></li>
+            <li><a href="wallet.jsp">wallet</a></li>
             <li><a href="prev_orders.jsp">Previous Orders</a></li>
             <li><a href="mycart.jsp">My Cart</a></li>
             <li><a href="contactus.jsp">Contact Us</a></li>

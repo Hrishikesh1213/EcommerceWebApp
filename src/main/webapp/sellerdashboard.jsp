@@ -84,7 +84,7 @@
 
 
 
-<form action = "SellerProcesser" method = "post">
+<form action = "SellerProcesser" method = "post" enctype="multipart/form-data">
 
 	<label for="name"><b>Product Name: </b></label><br>
     <input type="text" placeholder="Enter Name" name="name" required><br>
@@ -95,8 +95,8 @@
     <label for="category"><b>category: </b></label><br>
     <input type="text" placeholder="category" name="category" required><br>
     
-    <label for="image"><b>image path: </b></label><br>
-    <input type="text" placeholder="image" name="image" required><br>
+    <label for="image"><b>image: </b></label><br>
+    <input type="file" placeholder="image" name="image" required><br>
     
     <label for="price"><b>price: </b></label><br>
     <input type="number" placeholder="price" name="price" required><br>

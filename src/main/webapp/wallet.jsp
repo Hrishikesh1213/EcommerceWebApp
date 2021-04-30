@@ -1,36 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="com.dbmsproject.EcommerceWebApp.CartRepo" %>
-<%@ page import="com.dbmsproject.EcommerceWebApp.MyCart" %>
+<%@ page import="com.dbmsproject.EcommerceWebApp.OrderStatus" %>
+<%@ page import="com.dbmsproject.EcommerceWebApp.WalletRepo" %>
+<%@ page import="com.dbmsproject.EcommerceWebApp.Wallet" %>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.lang.*" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-</style>
-<title>My Cart</title>
+<title>Wallet</title>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css\nav.css"/>
+<style>
+	#address {
+	  font-family: Arial, Helvetica, sans-serif;
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+	
+	#address td, #customers th {
+	  border: 1px solid #ddd;
+	  padding: 8px;
+	}
+	
+	#address tr:nth-child(even){background-color: #f2f2f2;}
+	
+	#address tr:hover {background-color: #ddd;}
+	
+	#address th {
+	  padding-top: 12px;
+	  padding-bottom: 12px;
+	  text-align: left;
+	  background-color: #4CAF50;
+	  color: white;
+	}
+
+</style>
 </head>
 <body>
-<script src="js\nav.js"></script>
-
 <%
 	if(session.getAttribute("email") == null){
 %>
@@ -88,62 +100,52 @@ td, th {
 <%
 	}
 %>
+<h2></h2><br>
 
-<table>
-  <tr>
-    <th>Image</th>
-    <th>Product Name</th>
-    <th>Seller Name</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Cost</th>
-  </tr>
+<%
+int cID = Integer.parseInt(session.getAttribute("cID").toString());
+	WalletRepo wr = new WalletRepo();
+	Wallet w  = wr.getMyWallet(cID);
+
+%>
+
+<h1>ID: <%= w.getcID() %></h1><br>
+<h1>Name: <%= w.getName() %></h1><br>
+<h2>Amount: <%= w.getAmount() %></h2><br>
+<h2>Points: <%= w.getPoints() %></h2><br>
+
+<h2>Previous Transactions</h2><br>
+
+<%
+	//CardRepo ar = new CardRepo();
+	CartRepo cr = new CartRepo();
+	ArrayList<OrderStatus> list = cr.getMyTransaction(cID);
+%>
+<form action = "DA_Processer" method = "post">
+	
+	<table id="address">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Transaction ID</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
 <% 
-		CartRepo cr = new CartRepo();
-		
-		int cID = Integer.parseInt(session.getAttribute("cID").toString());
-
-		ArrayList<MyCart> list = cr.getMyCart(cID);
-		
-		if(list.size() == 0){
+	for(OrderStatus os : list){
 %>
-			<h1>Cart is Empty</h1><br>
-			<h2>Proceed to shopping area</h2>
+				<tr>
+						<td><%= os.getOrderdate()   %></td>
+						<td><%= os.gettID() 		%>	</td>
+						<td><%= os.getCost()		%>	</td>
+				</tr>
 <%
-		}
-		else{
-		
-		for(MyCart mc : list){
+	}
+%>
+	</table><br>
 
-%>
-		<tr>
-		    <td><img src="data:image/jpg;base64,<%= mc.getImage() %>" width="100" height="150"></td>
-		    <td><%= mc.getPname() %></td>
-		    <td><%= mc.getSname() %></td>
-		    <td><%= mc.getPrice() %></td>
-		    <td><%= mc.getQuantity() %></td>
-		    <td><%= mc.getCost() %></td>
-		    <td>
-		    	<form action="ATC_BN_Processer" method="post">
-			    	<input type="hidden" id="cID" name="cID" value = <%= cID %>>
-			    	<input type="hidden" id="pID" name="pID" value = <%= mc.getpID() %>>
-			    	<input type="hidden" id="sID" name="sID" value = <%= mc.getsID() %>>
-			    	
-				  	<button type="submit" name="submit" value="delete_from_cart" >Delete</button><br>
-			  	</form>
-		    </td>
-		</tr>
-<%
-		}
-%>
-</table>
+<h2>Add new Card</h2>
 
 
-<form action="ATC_BN_Processer" method="post">
-			  <button type="submit" name="submit" value="buy_now_from_cart" >Buy Now</button><br>
-</form>
-<%
-		}
-%>
 </body>
 </html>

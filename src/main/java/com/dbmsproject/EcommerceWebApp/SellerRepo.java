@@ -1,5 +1,6 @@
 package com.dbmsproject.EcommerceWebApp;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +47,7 @@ public class SellerRepo {
 		
 	}
 	
-	public int insertIntoProduct (String category, String name, String description, String Image, int sID, int price, int quantity) {
+	public int insertIntoProduct (String category, String name, String description, InputStream Image, int sID, int price, int quantity) {
 		
 		int status =0;
 		try{
@@ -57,7 +58,7 @@ public class SellerRepo {
 			ps.setString(1, category);
 			ps.setString(2, name);
 			ps.setString(3, description);
-			ps.setString(4, Image);
+			ps.setBlob(4, Image);
 			ps.setInt(5, sID);
 			ps.setInt(6, price);
 			ps.setInt(7, quantity);

@@ -49,7 +49,12 @@ public class ATC_BN_Processer extends HttpServlet {
 			System.out.println("cID: "+cID+" pID: "+pID+" sID: "+sID+" quantity: "+quantity+" price: "+price );
 			
 			CartRepo cr = new CartRepo();
-			cr.insertIntoCart( new Cart(pID, cID, sID, price, quantity) );
+			int status = cr.insertIntoCart( new Cart(pID, cID, sID, price, quantity) );
+			
+			if(status == -1) {
+				session.setAttribute("error_to_home_page", "Maximum amount of items added to cart...!!!");
+			}
+			
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 
 		}

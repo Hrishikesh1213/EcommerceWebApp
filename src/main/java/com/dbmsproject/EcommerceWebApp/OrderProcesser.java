@@ -43,7 +43,7 @@ public class OrderProcesser extends HttpServlet {
 		String addr_addr_type = pk.split("~")[3];				System.out.println("addr_addr_type: "+addr_addr_type);
 		*/
 		String transtype = session.getAttribute("transtype").toString();			System.out.println("transtype: "+transtype);
-
+		String status = null;
 		
 		if(buyfrom.equals("BUY_NOW")) {
 						
@@ -57,8 +57,7 @@ public class OrderProcesser extends HttpServlet {
 			
 			Address a = ar.getMySpecficAddress(cID, addr_name, addr_phno, addr_addr_type);
 			
-			cr.callBuyThis(cID, pID, sID, quantity, addr_phno, a.toString(), transtype);
-
+			status = cr.callBuyThis(cID, pID, sID, quantity, addr_phno, a.toString(), transtype);
 			
 		}
 		else if(buyfrom.equals("BUY_FROM_CART")){
@@ -68,10 +67,17 @@ public class OrderProcesser extends HttpServlet {
 			
 			Address a = ar.getMySpecficAddress(cID, addr_name, addr_phno, addr_addr_type);
 			
-			cr.callCheckout(cID, addr_phno, a.toString(), transtype);
+			status = cr.callCheckout(cID, addr_phno, a.toString(), transtype);
 			
 		}
-		
+		if(status ==null) {
+			session.setAttribute("status_of_buynow_checkout","I00001");
+
+		}
+		else {
+			session.setAttribute("status_of_buynow_checkout","E00027");
+			session.setAttribute("error_message",status);
+		}
 		request.getRequestDispatcher("thankyou.jsp").forward(request, response);
 
 		

@@ -23,7 +23,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="#">Solutions</a></li>
+            <li><a href="wallet.jsp">wallet</a></li>
             <li><a href="prev_orders.jsp">Previous Orders</a></li>
             <li><a href="mycart.jsp">My Cart</a></li>
             <li><a href="contactus.jsp">Contact Us</a></li>
@@ -37,8 +37,25 @@
         </ul>
     </nav><br><br><br><br><br>
 
-<h1>Thank you for shopping with us</h1><br>
-<h2>Your order has been placed successfully</h2><br>
-<h2>please return to home page</h2><br>
+<%
+	String trans_code = session.getAttribute("status_of_buynow_checkout").toString();
+	if(trans_code.equals("I00001")){
+%>
+		<h1>Thank you for shopping with us</h1><br>
+		<h2>Your order has been placed successfully</h2><br>
+		<h2>please return to home page</h2><br>
+<%
+	}
+	else if(trans_code.equals("E00027")){
+%>
+		<h1>Sorry for the Inconvenience</h1><br>
+		<h2>The transaction is failed due to </h2><br>
+		<h2><%= session.getAttribute("error_message").toString() %></h2><br>
+		<h2>please return to home page and try again</h2><br>
+<%	
+	}
+%>
+
+
 </body>
 </html>

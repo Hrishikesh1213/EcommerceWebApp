@@ -55,7 +55,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="#">Solutions</a></li>
+            <li><a href="wallet.jsp">wallet</a></li>
             <li><a href="#">Previous Orders</a></li>
             <li><a href="mycart.jsp">My Cart</a></li>
             <li><a href="#">Contact Us</a></li>
@@ -78,7 +78,7 @@
 	ProductRepo pr = new ProductRepo();
 	ArrayList<Product> list = pr.getProductInfo(pID);
 %>
-<img src= <%= list.get(0).getImage() %> style="width:500px"/><br>
+<img src="data:image/jpg;base64,<%= list.get(0).getImage() %>" style="width:500px"/><br>
 <%= list.get(0).getpID() %><br>
 <%= list.get(0).getCategory() %><br>
 <%= list.get(0).getPname() %><br>

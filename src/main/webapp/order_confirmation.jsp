@@ -80,7 +80,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="#">Solutions</a></li>
+            <li><a href="wallet.jsp">wallet</a></li>
             <li><a href="prev_orders.jsp">Previous Orders</a></li>
             <li><a href="mycart.jsp">My Cart</a></li>
             <li><a href="contactus.jsp">Contact Us</a></li>
@@ -148,8 +148,8 @@
 
 %>
 			<tr>
-				<td><</td>
-				<td><img src= <%= mc.getImage() %> width="100" height="150"></td>
+				<td>HRisih</td>
+				<td><img src="data:image/jpg;base64,<%= mc.getImage() %>" width="100" height="150"></td>
 				<td><%= mc.getPname() %></td>
 			    <td><%= mc.getSname() %></td>
 			    <td><%= mc.getPrice() %></td>
